@@ -30,6 +30,9 @@ dependencies:
   flutter:
     sdk: flutter
   sqflite:
+  intl:
+  cloud_firestore:
+  firebase_core:
 
 
 

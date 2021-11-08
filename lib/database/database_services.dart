@@ -1,64 +1,65 @@
-import 'dart:io';
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common/sqlite_api.dart';
-import 'package:path/path.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:calculator_app/functions/functions.dart';
-import 'dart:async';
-
-class DatabaseHelper {
-
-  static final _dbName = 'record.db';
-  static final _dbVersion = 1;
-  static final _tablename = 'records';
-
-  static final columnId = '_id';
-  static final columnFirst = '_firstNumber';
-  static final columnOperation = '_operation';
-  static final columnSecond = '_secondNumber';
-  static final columnResult = '_result';
-  static final columnDate = "_date";
 
 
-  DatabaseHelper._privateConstructor();
 
-  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+void initFirebase() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+}
 
-  static Database? _database;
+void insert(String firstNumber, String func,String secondNumber,String result, String time,{String equals= '='} ){
+  List a= [firstNumber,func,secondNumber,equals,result ,time];
+  FirebaseFirestore.instance.collection('histories').add({'history': a});
+}
 
-  Future<Database?> get database async {
-    if (_database != null) {
-      return _database;
-    } else {
-      _database = await _initiateDatabase();
-    }
-    return _database;
-  }
+class getHistory extends StatefulWidget {
+  const getHistory({Key? key}) : super(key: key);
 
-  _initiateDatabase() async {
-    return await openDatabase(
-        join(await getDatabasesPath(), _dbName),
-        onCreate: (db, version) async {
-          await db.execute('''
-          CREATE TABLE $_tablename( $columnId INTEGER PRIMARY KEY,
-    $columnFirst TEXT, $columnOperation TEXT, $columnSecond TEXT, $columnResult TEXT, $columnDate TEXT)
-    ''');
-        },
-        version: _dbVersion
+  @override
+  _getHistoryState createState() => _getHistoryState();
+}
+
+class _getHistoryState extends State<getHistory> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('histories').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if(!snapshot.hasData) return Text("No records");
+        return ListView.builder(
+            itemCount: snapshot.data.docs.length,
+            itemBuilder: (BuildContext context, int index){
+              return Text(
+                correction(correction(snapshot.data.docs[index].get('history').toString())), style: TextStyle(fontFamily: 'Nexa',fontSize: 18),
+
+              );
+            }
+        );
+
+
+
+        /*  return ListView.builder(
+            itemCount: snapshot.data.docs.length,
+            itemBuilder: (BuildContext context, int index){
+              return Dismissible(
+                key: Key(snapshot.data.docs[index].id),
+
+                child: Text(correction(snapshot.data.docs[index].get('history').toString()), style: TextStyle(fontFamily: 'Nexa',fontSize: 18),),*
+
+              );
+            }
+        );*/
+      },
+
     );
   }
-
-  Future<int> insert(Map<String, dynamic> row) async {
-    Database? db = await instance.database;
-    return await db!.insert(_tablename, row);
-  }
-
-  Future<List<Map<String, dynamic>>> queryAll() async {
-    Database? db = await instance.database;
-    return await db!.query(_tablename);
-  }
-
-
 }
+
+
+
 

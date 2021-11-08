@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:calculator_app/functions/functions.dart';
+import 'package:calculator_app/database/database_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return History();
-  }
-}
+
 class History extends StatefulWidget {
   const History({Key? key}) : super(key: key);
 
@@ -21,9 +20,11 @@ class _HistoryState extends State<History> {
             brightness: Brightness.dark, accentColor: Colors.deepPurple),
         home: Builder(
           builder: (context) => Scaffold(
-            body: Text('Te'),
+            body:  getHistory()),
+
+
           ),
-        ));
+        );
   }
 }
 

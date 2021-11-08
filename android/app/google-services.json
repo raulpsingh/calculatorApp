@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "139840366480",
+    "project_id": "calculatorapp-e7db1",
+    "storage_bucket": "calculatorapp-e7db1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139840366480:android:3774481744d2f12659f515",
+        "android_client_info": {
+          "package_name": "com.raulsingh.calculator_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139840366480-igsv5vbogn7qfu265php41i68v94nvfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATHfyHg14r2RHJ9-k5K0yc1U8cdM15nKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139840366480-igsv5vbogn7qfu265php41i68v94nvfq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

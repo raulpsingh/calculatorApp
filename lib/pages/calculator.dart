@@ -118,7 +118,7 @@ class _AddTwoNumbersState extends State<AddTwoNumbers> {
                   },
                 ),
                 RaisedButton(
-                  child: const Text("x"),
+                  child: const Text("*"),
                   color: Colors.black26,
                   onPressed: () {
                     setState(() {
