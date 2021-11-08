@@ -20,7 +20,13 @@ class _HistoryState extends State<History> {
             brightness: Brightness.dark, accentColor: Colors.deepPurple),
         home: Builder(
           builder: (context) => Scaffold(
-            body:  getHistory()),
+            body:  MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10,left: 5),
+                  child: getHistory(),
+                ))),
 
 
           ),
